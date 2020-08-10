@@ -4,6 +4,6 @@ const router=express.Router();
 const greetingcontroller=require('../controller/greeting')
 
 
-router.get('/:name',greetingcontroller.create);
+router.post('/:name',greetingcontroller.create);
 
 module.exports=router;

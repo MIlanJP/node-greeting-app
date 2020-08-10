@@ -1,3 +1,6 @@
+
+
+
 /**
  * 
  * @param {request Object from http } req  incoming readable request object
@@ -6,5 +9,6 @@
  */
 exports.create=(req,res)=>{
     res.setHeader('Content-Type','application/json')
-    res.send(req.params.name)
+    const welcomeMessage=`Welcome to Node JS ${req.params.name}`
+    res.send({welcomeMessage})
 }
