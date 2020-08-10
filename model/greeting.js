@@ -1,17 +1,22 @@
 // Imported mongoose to create schema model for database
-const mongoose=require('mongoose');
+const mongoose = require("mongoose");
 
 /**
  * Defining a Schema for Welcomegreeting database
  */
-const welcomeMessageSchema=new mongoose.Schema({
-    message:{
-        type:String,
-        required:true
-    }
-})
+const welcomeMessageSchema = new mongoose.Schema(
+  {
+    message: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // Creating a Model for Schema
-const WelcomeGreeting=mongoose.model("WelcomeGreeting",welcomeMessageSchema);
 
-module.exports=WelcomeGreeting;
+module.exports = mongoose.model("WelcomeGreeting", welcomeMessageSchema);
+
