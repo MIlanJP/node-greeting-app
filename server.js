@@ -2,6 +2,7 @@
 const express=require('express');
 const app=express();
 
+debugger
 // Importing mongoose to establish connection between node and mongodb
 const mongoose=require('mongoose')
 const dbConfigURL=require('./config/database.config')
@@ -12,16 +13,24 @@ mongoose.connect(dbConfigURL.url).then(
 ).catch(err=>{console.error("Connection failed.......")})
 
 // Importing routes for matching URI
-const greetingrouter=require('./routes/greeting')
+const greetingrouter=require('./routes/greeting.routes')
+const helloworldrouter=require('./routes/helloworld.rts')
 
-// (MiddleWare) Used for parsing request type of -app/www-form-urlencoded
+
 /**
+ *  @description (MiddleWare) Used for parsing request type of -app/www-form-urlencoded
  * transfer control to the matching router 
  */
 app.use('/api/greeting',greetingrouter);
 
 
+/**
+ * Routes for Hello World message
+ */
+app.use('/',helloworldrouter);
+
 const port=process.env.PORT||3000
-app.listen(port,()=>{
+module.exports =app.listen(port,()=>{
     console.log("Server is listening on port "+port)
 })
+

@@ -1,6 +1,5 @@
-
-// Importing greeting from services 
-const greetingservices=require('../services/greeting.services')
+// Importing greeting from services
+const greetingservices = require("../services/greeting.services");
 
 /**
  * this is post Request
@@ -8,13 +7,22 @@ const greetingservices=require('../services/greeting.services')
  * @param {response Object to http} res  Outgoing writable response object
  *  @param {welcomemesage} Adds Welcome to Node JS when  name added
  */
-exports.create=(req,res)=>{
-    res.setHeader('Content-Type','application/json')
-    const welcomeMessage=`Welcome to Node JS ${req.params.name}`
-    greetingservices.saveMessage(welcomeMessage);
-    res.send({welcomeMessage})
-}
-
+exports.create = (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  let welcomeMessage;
+  /**
+   * @description Assigns firstname and lastname if both are entered 
+   */
+  if (typeof req.params.name!=="undefined" && typeof req.params.name!=='undefined') {
+    welcomeMessage = `Welcome to Node JS ${req.params.name} ${req.params.sname}`;
+  }  else if (typeof req.params.name!=="undefined") {
+    welcomeMessage = `Welcome to Node JS ${req.params.name}`;
+  } else {
+    welcomeMessage = `Welcome to Node JS ${req.params.sname}`;
+  }
+  greetingservices.saveMessage(req.params,welcomeMessage);
+  res.send({ welcomeMessage });
+};
 
 /**
  * this is GET request
@@ -22,11 +30,15 @@ exports.create=(req,res)=>{
  * @param {response Object to http} res  Outgoing writable response object
  */
 
-exports.getnames=(req,res)=>{
-    res.setHeader('Content-Type', 'application/json');
-console.log("Printing from controller");
- const messages=greetingservices.getNames();
+exports.getnames = (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  console.log("Printing from controller");
+  const messages = greetingservices.getNames();
 
- console.log(messages)
-  res.send({messages});
+  console.log(messages);
+  res.send({ messages });
+};
+
+exports.getById= (req, res) => {
+    greetingservices.getById(res.params.id);
 }
