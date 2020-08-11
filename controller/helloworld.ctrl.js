@@ -1,7 +1,7 @@
 const Helloworld= require('../services/helloworld.srvs')
 
 // creating HelloWorld Object
-const helloworld=new Helloworld();
+const hw=new Helloworld();
 
 /**
  * @description This function has responsibility to return hello World message when called 
@@ -9,7 +9,7 @@ const helloworld=new Helloworld();
  * @param {Http Response Object} res 
  */
 exports.getHelloWorld=(req,res)=>{
-    const helloworldmessage=helloworld.returnHelloWorld();
+    const helloworldmessage=hw.returnHelloWorld();
     res.setHeader('Content-Type','application/json');
     res.send({helloworldmessage});
 }
