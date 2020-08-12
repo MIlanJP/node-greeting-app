@@ -31,26 +31,22 @@ exports.saveMessage = (params,welcomeMessage) => {
 /**
  * exporting the function to get all the names present in the data base
  */
-exports.getNames = (res) => {
+exports.getNames =async (res) => {
   /**
    * Calling function which contains feature to get all the greeting
    * messages from the data base.
    */
-  const getAllNames = async () => {
-    await GreetingModel.find({})
+
+    await GreetingModel.find({}).select('message')
       .then((data) => {
         res.send(data)
       })
       .catch((err) => {
-        messages = "Error occured while retriving " + error;
+       res.status(500).send("Error Occured while retrieving messages")
         debugger
       });
-    // console.log(messages);
 
-    // console.log("Printing from services");
-  };
-  getAllNames();
-  return messages;
+
 };
 
 exports.getById=async (req,res)=>{

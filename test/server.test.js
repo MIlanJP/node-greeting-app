@@ -51,6 +51,9 @@ describe("Hello World request",()=>{
 })
 
 describe("Adding  names",()=>{
+    /**
+     * Adding testcases for testing for registering first or second or both names
+     */
     it("Entering Full name",done=>{
         chai.request(server)
         .post('/api/greeting/milan/kumar')

@@ -42,8 +42,6 @@ exports.create = (req, res) => {
  */
 
 exports.getnames = (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  console.log("Printing from controller");
    greetingservices.getNames(res);
 };
 
