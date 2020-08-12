@@ -31,18 +31,15 @@ exports.saveMessage = (params,welcomeMessage) => {
 /**
  * exporting the function to get all the names present in the data base
  */
-exports.getNames = () => {
+exports.getNames = (res) => {
   /**
    * Calling function which contains feature to get all the greeting
    * messages from the data base.
    */
-  let messages;
-  console.log("Printing from out services");
   const getAllNames = async () => {
-    await GreetingModel.find()
+    await GreetingModel.find({})
       .then((data) => {
-        messages = data;
-        console.log(data)
+        res.send(data)
       })
       .catch((err) => {
         messages = "Error occured while retriving " + error;
@@ -56,8 +53,8 @@ exports.getNames = () => {
   return messages;
 };
 
-exports.getById=(req,res)=>{
-  const message=GreetingModel.findById(req.params.id).then(data=>{
+exports.getById=async (req,res)=>{
+  const message=await GreetingModel.findById(req.params.id).then(data=>{
     // message=data.message
 
     res.send({message:data.message});
