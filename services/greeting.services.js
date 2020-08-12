@@ -86,7 +86,7 @@ exports.updatemessage= async (req,res)=>{
       res.status(500).send("Not able to update Message")
     }else{
       res.send(result)
-      emitter.emit("sendEmail",`Welcome message of ID ( ${id}) is updated to ${messages} `);
+      emitter.emit("sendEmail",`Welcome message of ID ( ${id}) is updated to (${messages}) `);
     }
   })
  
