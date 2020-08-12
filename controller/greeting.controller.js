@@ -46,12 +46,19 @@ exports.getnames = (req, res) => {
 };
 
 /**
- * 
+ * This is a get request
  * @param {http request Object} req 
  * @param {http response Object} res
  * @description function use to load the Welcome message based on ID supplied 
  */
 exports.getById = (req, res) => {
-    console.log(req.params.id);
   greetingservices.getById(req,res);
 };
+
+exports.updatemessage = (req, res) => {
+    greetingservices.updatemessage(req,res)
+};
+
+exports.deleteID= (req, res) => {
+    greetingservices.deleteID(req,res)
+}

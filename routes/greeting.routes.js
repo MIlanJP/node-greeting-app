@@ -16,4 +16,9 @@ router.post('/:name/:sname',greetingcontroller.create)
 router.get('/greetingmessageid/:id',greetingcontroller.getById)
 
 router.get('/messages',greetingcontroller.getnames)
+
+router.put('/greetingmessageid/:id/:message',greetingcontroller.updatemessage);
+router.delete('/greetingmessageid/:id',greetingcontroller.deleteID);
+
+
 module.exports=router;

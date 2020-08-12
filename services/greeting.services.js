@@ -49,6 +49,14 @@ exports.getNames =async (res) => {
 
 };
 
+
+/**
+ * 
+ * @param {Http Request Object} req 
+ * @param {Http Response Object} res 
+ * @description Used to display welcomemessages based on ID supplied
+ */
+
 exports.getById=async (req,res)=>{
   const message=await GreetingModel.findById(req.params.id).then(data=>{
     // message=data.message
@@ -60,4 +68,28 @@ exports.getById=async (req,res)=>{
   ).catch(err=>{
     res.status(500).send("Not able to fetch Messages")
   });
+}
+
+
+exports.updatemessage= async (req,res)=>{
+  const id=req.params.id
+  const messages=req.params.message
+  GreetingModel.findByIdAndUpdate(id,{"message":messages},function(err,result){
+    if(err){
+      res.status(500).send("Not able to update Message")
+    }else{
+      res.send(result)
+    }
+  })
+}
+
+exports.deleteID=async (req,res)=>{
+    const id=req.params.id;
+    GreetingModel.findByIdAndRemove(id,function(err,result){
+      if(err){
+        res.status(500).send("Not able to delete Message")
+      }else{
+        res.send(result);
+      }
+    })
 }
