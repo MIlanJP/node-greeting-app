@@ -28,7 +28,10 @@ describe("Hello World request",()=>{
             })
         })
 
-        it("GIving Wrong URI for helloworld message",done=>{
+        /**
+         * @description testing wrong api call and checking the response status and body 
+         */
+        it("Giving Wrong URI for helloworld message",done=>{
             chai.request(server)
             .get('/helloooworld')
             .end((err,response)=>{

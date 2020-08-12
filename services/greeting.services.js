@@ -56,6 +56,15 @@ exports.getNames = () => {
   return messages;
 };
 
-exports.getById=(id)=>{
-  GreetingModel.findById(id);
+exports.getById=(req,res)=>{
+  const message=GreetingModel.findById(req.params.id).then(data=>{
+    // message=data.message
+
+    res.send({message:data.message});
+    console.log(data)
+    console.log("Printing from service find by ID")
+  }
+  ).catch(err=>{
+    res.status(500).send("Not able to fetch Messages")
+  });
 }

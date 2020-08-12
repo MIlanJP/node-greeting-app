@@ -11,16 +11,25 @@ exports.create = (req, res) => {
   res.setHeader("Content-Type", "application/json");
   let welcomeMessage;
   /**
-   * @description Assigns firstname and lastname if both are entered 
+   * @description Assigns firstname and lastname if both are entered
    */
-  if (typeof req.params.name!=="undefined" && typeof req.params.name!=='undefined') {
+  if (
+    typeof req.params.name !== "undefined" &&
+    typeof req.params.name !== "undefined"
+  ) {
     welcomeMessage = `Welcome to Node JS ${req.params.name} ${req.params.sname}`;
-  }  else if (typeof req.params.name!=="undefined") {
+  } else if (typeof req.params.name !== "undefined") {
+  /**
+   * This condition gets executed when only firstname is given
+   */
     welcomeMessage = `Welcome to Node JS ${req.params.name}`;
   } else {
+  /**
+   * This condition gets executed when only lastname is given
+   */
     welcomeMessage = `Welcome to Node JS ${req.params.sname}`;
   }
-  greetingservices.saveMessage(req.params,welcomeMessage);
+  greetingservices.saveMessage(req.params, welcomeMessage);
   res.send({ welcomeMessage });
 };
 
@@ -39,6 +48,7 @@ exports.getnames = (req, res) => {
   res.send({ messages });
 };
 
-exports.getById= (req, res) => {
-    greetingservices.getById(res.params.id);
-}
+exports.getById = (req, res) => {
+    console.log(req.params.id);
+  greetingservices.getById(req,res);
+};
