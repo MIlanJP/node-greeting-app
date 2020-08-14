@@ -55,7 +55,6 @@ exports.getAllMessages = () => {
       .find({})
       .select("message")
       .then((data) => {
-        // console.log(data,"Printing from Model update section")
         resolve(data);
       })
       .catch((err) => {

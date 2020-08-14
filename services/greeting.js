@@ -1,8 +1,8 @@
 // Importing DataBase model from model/greeting
 // const greetingModel = require("../model/greeting.mdl").mongooseModel;
-const saveGreetingMessage = require("../model/greeting.mdl").saveMessage;
-const getAllMessages = require("../model/greeting.mdl").getAllMessages;
-const GreetingModel = require("../model/greeting.mdl");
+const saveGreetingMessage = require("../model/greeting").saveMessage;
+const getAllMessages = require("../model/greeting").getAllMessages;
+const GreetingModel = require("../model/greeting");
 const emit = require("../lib/emailutility");
 const emitter = emit.emitter;
 /**
@@ -28,7 +28,6 @@ exports.saveMessage = async (params, welcomeMessage) => {
 exports.getNames = async (res) => {
   try {
     await getAllMessages().then((data) => {
-      console.log(data, "Printing from Services");
       res.setHeader("Content-Type", "application/json");
       res.send({ data });
     });

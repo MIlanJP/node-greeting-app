@@ -14,7 +14,7 @@ mongoose.connect(dbConfigURL.url).then(
 ).catch(err=>{console.error("Connection failed.......")})
 
 // Importing routes for matching URI
-const greetingrouter=require('./routes/greeting.routes')
+const greetingrouter=require('./routes/greeting')
 const helloworldrouter=require('./routes/helloworld.rts')
 
 

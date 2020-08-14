@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 // importing greeting controller to handle control to controller based on routes
-const greetingcontroller = require("../controller/greeting.controller");
+const greetingcontroller = require("../controller/greeting");
 
 // Route for only firstname
 router.post("/firstname/:name", greetingcontroller.create);

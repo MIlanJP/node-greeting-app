@@ -1,5 +1,5 @@
 // Importing greeting from services
-const greetingservices = require("../services/greeting.services");
+const greetingservices = require("../services/greeting");
 
 /**
  * this is post Request
