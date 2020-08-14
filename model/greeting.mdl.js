@@ -1,6 +1,6 @@
 // Importing mongoose library
 const mongoose = require("mongoose");
-
+const logger=require("../logger")
 /**
  * @description creating schema for mongo database
  * @param {String} firstname @description firstname of user
@@ -18,9 +18,16 @@ const userDetailsSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
 const mongooseModel = mongoose.model("userDetails", userDetailsSchema);
 exports.mongooseModel = mongooseModel;
 
+/**
+ * 
+ * @param {String} firstname @description First Name of the User
+ * @param {String} lastname @description Last Name of the User
+ * @param {String} message @description WelcomeGreeting for the User
+ */
 exports.saveMessage = (firstname, lastname, message) => {
   let greetingmessage = new mongooseModel({
     firstname: firstname,
@@ -32,11 +39,16 @@ exports.saveMessage = (firstname, lastname, message) => {
       .save()
       .then((data) => resolve(data))
       .catch((err) => {
+        logger.error(err)
         reject(err);
       });
   });
 };
 
+
+/**
+ * @description Used to fetch all the records from the database
+ */
 exports.getAllMessages = () => {
   return new Promise((resolve, reject) => {
     mongooseModel
@@ -47,11 +59,16 @@ exports.getAllMessages = () => {
         resolve(data);
       })
       .catch((err) => {
+        logger.error(err)
         reject(err);
       });
   });
 };
 
+/**
+ * 
+ * @param {ObjectID} id @description Used to get Welcome message using the ID
+ */
 exports.getMessageById = (id) => {
   return new Promise((resolve, reject) => {
     mongooseModel
@@ -60,11 +77,17 @@ exports.getMessageById = (id) => {
         resolve(data);
       })
       .catch((err) => {
+        logger.error(err)
         reject(err);
       });
   });
 };
 
+/**
+ * 
+ * @param {ObjectID} id  @description Id used to fetch the particular record
+ * @param {String} message @description Used to update the welcome message
+ */
 exports.updateMessageById = (id, message) => {
   return new Promise((resolve, reject) => {
     mongooseModel.findByIdAndUpdate(id, { message: message }, function (
@@ -72,6 +95,7 @@ exports.updateMessageById = (id, message) => {
       result
     ) {
       if (err) {
+        logger.error(err)
         reject(err);
       } else {
         resolve(result);
@@ -80,10 +104,15 @@ exports.updateMessageById = (id, message) => {
   });
 };
 
+/**
+ * 
+ * @param {ObjectID} id  @description Used to delete the record having this ObjectID
+ */
 exports.deleteMessageById = (id) => {
   return new Promise((resolve, reject) => {
     mongooseModel.findByIdAndRemove(id, function (err, result) {
       if (err) {
+        logger.error(err)
         reject(err);
       } else {
         resolve(result);
