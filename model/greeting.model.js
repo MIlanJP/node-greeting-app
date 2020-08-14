@@ -19,4 +19,3 @@ const welcomeMessageSchema = new mongoose.Schema(
 // Creating a Model for Schema
 
 module.exports = mongoose.model("WelcomeGreeting", welcomeMessageSchema);
-
