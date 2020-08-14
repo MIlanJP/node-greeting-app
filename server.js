@@ -1,6 +1,7 @@
 // Importing express library to start server and handle api calls
 const express=require('express');
 const app=express();
+const logger=require('./logger')
 
 debugger
 // Importing mongoose to establish connection between node and mongodb
@@ -31,6 +32,6 @@ app.use('/',helloworldrouter);
 
 const port=process.env.PORT||3000
 module.exports =app.listen(port,()=>{
-    console.log("Server is listening on port "+port)
+    logger.info("Server is listening on port "+port)
 })
 

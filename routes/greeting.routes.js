@@ -13,7 +13,7 @@ router.post('/secondname/:sname',greetingcontroller.create)
 router.post('/:name/:sname',greetingcontroller.create)
 
 // Route to get message by id
-router.get('/greetingmessageid/:id',greetingcontroller.getById)
+router.get('/greetingmessageid/:id',greetingcontroller.getMessageById)
 
 router.get('/messages',greetingcontroller.getnames)
 

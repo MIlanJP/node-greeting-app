@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
  */
 const userDetailsSchema = new mongoose.Schema(
   {
-    firstname: String,
+    firstname: {type:String},
     lastname: String,
     message: String,
   },
@@ -18,5 +18,7 @@ const userDetailsSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+const mongooseModel= mongoose.model("userDetails", userDetailsSchema);
+module.exports = mongooseModel
 
-module.exports = mongoose.model("userDetails", userDetailsSchema);
+// exports.getAllMessages=mongoose.save()

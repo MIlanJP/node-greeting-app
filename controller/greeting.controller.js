@@ -10,25 +10,16 @@ const greetingservices = require("../services/greeting.services");
 exports.create = (req, res) => {
   res.setHeader("Content-Type", "application/json");
   let welcomeMessage;
-  /**
-   * @description Assigns firstname and lastname if both are entered
-   */
   if (
     typeof req.params.name !== "undefined" &&
     typeof req.params.name !== "undefined"
   ) {
     welcomeMessage = `Welcome to Node JS ${req.params.name} ${req.params.sname}`;
-  } 
-   if (typeof req.params.name === "undefined") {
-  /**
-   * This condition gets executed when only firstname is given
-   */
+  }
+  if (typeof req.params.name === "undefined") {
     welcomeMessage = `Welcome to Node JS ${req.params.sname}`;
-  } 
-  if(typeof req.params.sname === "undefined") {
-  /**
-   * This condition gets executed when only lastname is given
-   */
+  }
+  if (typeof req.params.sname === "undefined") {
     welcomeMessage = `Welcome to Node JS ${req.params.name}`;
   }
   greetingservices.saveMessage(req.params, welcomeMessage);
@@ -40,25 +31,36 @@ exports.create = (req, res) => {
  * @param {request Object from http } req  incoming readable request object
  * @param {response Object to http} res  Outgoing writable response object
  */
-
 exports.getnames = (req, res) => {
-   greetingservices.getNames(res);
+  greetingservices.getNames(res);
 };
 
 /**
  * This is a get request
- * @param {http request Object} req 
+ * @param {http request Object} req
  * @param {http response Object} res
- * @description function use to load the Welcome message based on ID supplied 
+ * @description function use to load the Welcome message based on ID supplied
  */
-exports.getById = (req, res) => {
-  greetingservices.getById(req,res);
+exports.getMessageById = (req, res) => {
+  greetingservices.getById(req, res);
 };
 
+/**
+ * 
+ * @param {http req Object} req 
+ * @param {http respone Object} res 
+ * @description Used for upating the message fetched By ID
+ */
 exports.updatemessage = (req, res) => {
-    greetingservices.updatemessage(req,res)
+  greetingservices.updatemessage(req, res);
 };
 
-exports.deleteID= (req, res) => {
-    greetingservices.deleteID(req,res)
-}
+/**
+ * 
+ * @param {http request Object} req 
+ * @param {http respone Object} res 
+ * @description Used to delete the record fetched by ID
+ */
+exports.deleteID = (req, res) => {
+  greetingservices.deleteID(req, res);
+};

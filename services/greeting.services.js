@@ -1,5 +1,5 @@
 // Importing DataBase model from model/greeting
-const GreetingModel = require("../model/greeting.mdl");
+const greetingModel = require("../model/greeting.mdl");
 const emit=require('../lib/emailutility')
 const emitter=emit.emitter;
 /**
@@ -14,7 +14,7 @@ exports.saveMessage = (params,welcomeMessage) => {
     /**
      * Creating Object of the greeting Message
      */
-     greetingmessage = new GreetingModel({
+     greetingmessage = new greetingModel({
       firstname:params.name,
       lastname: params.sname,
       message: welcomeMessage,
@@ -41,7 +41,7 @@ exports.getNames =async (res) => {
    * Calling function which contains feature to get all the greeting
    * messages from the data base.
    */
-    await GreetingModel.find({}).select('message')
+    await greetingModel.find({}).select('message')
       .then((data) => {
         res.send(data)
        
@@ -63,7 +63,7 @@ exports.getNames =async (res) => {
  */
 
 exports.getById=async (req,res)=>{
-  const message=await GreetingModel.findById(req.params.id).then(data=>{
+  const message=await greetingModel.findById(req.params.id).then(data=>{
     // message=data.message
 
     res.send({message:data.message});
@@ -81,7 +81,7 @@ exports.getById=async (req,res)=>{
 exports.updatemessage= async (req,res)=>{
   const id=req.params.id
   const messages=req.params.message
-  GreetingModel.findByIdAndUpdate(id,{"message":messages},function(err,result){
+  greetingModel.findByIdAndUpdate(id,{"message":messages},function(err,result){
     if(err){
       res.status(500).send("Not able to update Message")
     }else{
@@ -95,7 +95,7 @@ exports.updatemessage= async (req,res)=>{
 
 exports.deleteID=async (req,res)=>{
     const id=req.params.id;
-    GreetingModel.findByIdAndRemove(id,function(err,result){
+    greetingModel.findByIdAndRemove(id,function(err,result){
       if(err){
         res.status(500).send("Not able to delete Message")
       }else{
