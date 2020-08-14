@@ -1,8 +1,8 @@
 // Importing DataBase model from model/greeting
-const greetingModel = require("../model/greeting.mdl").mongooseModel;
+// const greetingModel = require("../model/greeting.mdl").mongooseModel;
 const saveGreetingMessage = require("../model/greeting.mdl").saveMessage;
 const getAllMessages = require("../model/greeting.mdl").getAllMessages;
-const Gmodel = require("../model/greeting.mdl");
+const GreetingModel = require("../model/greeting.mdl");
 const emit = require("../lib/emailutility");
 const emitter = emit.emitter;
 /**
@@ -10,21 +10,15 @@ const emitter = emit.emitter;
  * @param {person} name  Its the greeting message followed by name of the person
  */
 exports.saveMessage = async (params, welcomeMessage) => {
-  let greetingmessage;
   let savedmessage;
 
-  greetingmessage = new greetingModel({
-    firstname: params.name,
-    lastname: params.sname,
-    message: welcomeMessage,
-  });
-  savedmessage = await saveGreetingMessage(
+  savedmessage = await GreetingModel.saveMessage(
     params.name,
     params.sname,
     welcomeMessage
   );
   console.log(savedmessage, "Printing from greeting service");
-  emitter.emit("sendEmail", JSON.stringify(greetingmessage) + "has been added");
+  emitter.emit("sendEmail", "User Details\n"+savedmessage + "\nhas been added to the DataBase");
   return savedmessage;
 };
 
@@ -53,7 +47,7 @@ exports.getNames = async (res) => {
  */
 
 exports.getById = async (req, res) => {
-  const message = await Gmodel.getMessageById(req.params.id)
+  const message = await GreetingModel.getMessageById(req.params.id)
     .then((data) => {
       res.send({ message: data.message });
       console.log(data);
@@ -71,30 +65,26 @@ exports.getById = async (req, res) => {
 exports.updatemessage = async (req, res) => {
   const id = req.params.id;
   const messages = req.params.message;
-  greetingModel.findByIdAndUpdate(id, { message: messages }, function (
-    err,
-    result
-  ) {
-    if (err) {
-      res.status(500).send("Not able to update Message");
-    } else {
-      res.send(result);
-      emitter.emit(
-        "sendEmail",
-        `Welcome message of ID ( ${id}) is updated to (${messages}) `
-      );
-    }
-  });
+
+ await GreetingModel.updateMessageById(req.params.id,messages).then(data=>{
+    res.send({message:data.message})
+    emitter.emit("sendEmail", `Welcome message of ID ( ${id}) is been updated to ${messages} `);
+  }).catch(err=>{
+    res.status(500).send("Error While updating message")
+  })
+
+
 };
 
 exports.deleteID = async (req, res) => {
   const id = req.params.id;
-  greetingModel.findByIdAndRemove(id, function (err, result) {
-    if (err) {
-      res.status(500).send("Not able to delete Message");
-    } else {
-      res.send(result);
+  await GreetingModel.deleteMessageById(req.params.id).then(data=>{
+    if(data!==null){
+      res.send({data});
       emitter.emit("sendEmail", `ID ( ${id}) is been deleted `);
+    }else{
+      res.status(500).send("This ID does not exist")
     }
-  });
+
+  }).catch(err => res.status(500).send("Error Occured while removing"))
 };

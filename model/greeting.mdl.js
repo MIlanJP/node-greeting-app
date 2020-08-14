@@ -47,7 +47,6 @@ exports.getAllMessages = () => {
         resolve(data);
       })
       .catch((err) => {
-        console.log("Hey printing from Error Model");
         reject(err);
       });
   });
@@ -61,9 +60,34 @@ exports.getMessageById = (id) => {
         resolve(data);
       })
       .catch((err) => {
-        console.log("Hey printing from Error Model");
         reject(err);
       });
   });
 };
 
+exports.updateMessageById = (id, message) => {
+  return new Promise((resolve, reject) => {
+    mongooseModel.findByIdAndUpdate(id, { message: message }, function (
+      err,
+      result
+    ) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+exports.deleteMessageById = (id) => {
+  return new Promise((resolve, reject) => {
+    mongooseModel.findByIdAndRemove(id, function (err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
