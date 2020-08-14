@@ -1,36 +1,27 @@
 // Importing DataBase model from model/greeting
-const greetingModel = require("../model/greeting.mdl");
+const greetingModel = require("../model/greeting.mdl").mongooseModel;
+const saveGreetingMessage = require("../model/greeting.mdl").saveMessage;
 const emit=require('../lib/emailutility')
 const emitter=emit.emitter;
 /**
  * It saves the greeting message into the database
  * @param {person} name  Its the greeting message followed by name of the person
  */
-exports.saveMessage = (params,welcomeMessage) => {
-  // console.log("Getting called from services" + params);
-  // Took name as closure inside the generateMessage function and saving into the database
+exports.saveMessage =async (params,welcomeMessage) => {
+
   let greetingmessage;
-  async function generateMessage() {
-    /**
-     * Creating Object of the greeting Message
-     */
+  let savedmessage;
+
      greetingmessage = new greetingModel({
       firstname:params.name,
       lastname: params.sname,
       message: welcomeMessage,
     });
-    /**
-     * Saving the created Object into the database by using save function
-     */
-    const savedmessage = await greetingmessage.save();
- 
-    console.log(savedmessage);
-    
-  }
-
+     savedmessage = await saveGreetingMessage(params.name,params.sname,welcomeMessage)
+    console.log(savedmessage,"Printing from greeting service");
   // Calling the synchronous function above
-  generateMessage();
   emitter.emit("sendEmail",JSON.stringify(greetingmessage)+'has been added');
+  return savedmessage;
 };
 
 /**

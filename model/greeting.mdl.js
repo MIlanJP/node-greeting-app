@@ -11,14 +11,25 @@ const mongoose = require("mongoose");
 const userDetailsSchema = new mongoose.Schema(
   {
     firstname: {type:String},
-    lastname: String,
-    message: String,
+    lastname: {type:String},
+    message: {type:String},
   },
   {
     timestamps: true,
   }
 );
 const mongooseModel= mongoose.model("userDetails", userDetailsSchema);
-module.exports = mongooseModel
+exports.mongooseModel= mongooseModel
 
-// exports.getAllMessages=mongoose.save()
+exports.saveMessage=(firstname,lastname,message)=>{
+  let greetingmessage=new mongooseModel({
+    firstname:firstname,
+    lastname: lastname,
+    message: message,
+  })
+  return new Promise((resolve,reject)=>{ greetingmessage.save().then((data)=>
+  resolve(data)
+  ).catch((err)=>{
+    reject(err)
+  })
+})}

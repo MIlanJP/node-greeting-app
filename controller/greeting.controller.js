@@ -22,8 +22,14 @@ exports.create = (req, res) => {
   if (typeof req.params.sname === "undefined") {
     welcomeMessage = `Welcome to Node JS ${req.params.name}`;
   }
-  greetingservices.saveMessage(req.params, welcomeMessage);
-  res.send({ welcomeMessage });
+  const savedMessage=greetingservices.saveMessage(req.params, welcomeMessage);
+  console.log(savedMessage,"Printing from controller");
+  savedMessage.then((data)=>{
+    res.send({message:data.message})
+  }).catch(error =>{
+    res.status(500).send("Error Occured while saving message")
+  })
+  // res.send({ savedMessage });
 };
 
 /**
