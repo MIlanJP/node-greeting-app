@@ -37,15 +37,33 @@ exports.saveMessage = (firstname, lastname, message) => {
   });
 };
 
-exports.getAllMessages=()=>{
-  return new Promise((resolve,reject) =>{
-    mongooseModel.find({}).select('message').then(data=>{
-      // console.log(data,"Printing from Model update section")
-      resolve(data);
-    }).catch((err)=>{
-      console.log("Hey printing from Error Model")
-      reject(err)
-    })
-  })
- 
-}
+exports.getAllMessages = () => {
+  return new Promise((resolve, reject) => {
+    mongooseModel
+      .find({})
+      .select("message")
+      .then((data) => {
+        // console.log(data,"Printing from Model update section")
+        resolve(data);
+      })
+      .catch((err) => {
+        console.log("Hey printing from Error Model");
+        reject(err);
+      });
+  });
+};
+
+exports.getMessageById = (id) => {
+  return new Promise((resolve, reject) => {
+    mongooseModel
+      .findById(id)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((err) => {
+        console.log("Hey printing from Error Model");
+        reject(err);
+      });
+  });
+};
+

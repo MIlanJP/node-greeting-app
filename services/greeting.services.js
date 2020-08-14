@@ -2,6 +2,7 @@
 const greetingModel = require("../model/greeting.mdl").mongooseModel;
 const saveGreetingMessage = require("../model/greeting.mdl").saveMessage;
 const getAllMessages = require("../model/greeting.mdl").getAllMessages;
+const Gmodel = require("../model/greeting.mdl");
 const emit = require("../lib/emailutility");
 const emitter = emit.emitter;
 /**
@@ -31,16 +32,15 @@ exports.saveMessage = async (params, welcomeMessage) => {
  * exporting the function to get all the names present in the data base
  */
 exports.getNames = async (res) => {
-try{
-
-  await getAllMessages().then((data)=>{
-    console.log(data,"Printing from Services")
-    res.setHeader("Content-Type", "application/json")
-    res.send({data})
-  })
-}catch(err){
-res.status(500).send("Error Occured while fetching messages")
-}
+  try {
+    await getAllMessages().then((data) => {
+      console.log(data, "Printing from Services");
+      res.setHeader("Content-Type", "application/json");
+      res.send({ data });
+    });
+  } catch (err) {
+    res.status(500).send("Error Occured while fetching messages");
+  }
 
   emitter.emit("sendEmail", "All welcome messages are retrieved");
 };
@@ -53,8 +53,7 @@ res.status(500).send("Error Occured while fetching messages")
  */
 
 exports.getById = async (req, res) => {
-  const message = await greetingModel
-    .findById(req.params.id)
+  const message = await Gmodel.getMessageById(req.params.id)
     .then((data) => {
       res.send({ message: data.message });
       console.log(data);
