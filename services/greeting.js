@@ -1,8 +1,5 @@
-// Importing DataBase model from model/greeting
-// const greetingModel = require("../model/greeting.mdl").mongooseModel;
-const saveGreetingMessage = require("../model/greeting").saveMessage;
-const getAllMessages = require("../model/greeting").getAllMessages;
-const GreetingModel = require("../model/greeting");
+
+const greetingModel = require("../model/greeting");
 const emit = require("../lib/emailutility");
 const emitter = emit.emitter;
 /**
@@ -12,7 +9,7 @@ const emitter = emit.emitter;
 exports.saveMessage = async (params, welcomeMessage) => {
   let savedmessage;
 
-  savedmessage = await GreetingModel.saveMessage(
+  savedmessage = await greetingModel.saveMessage(
     params.name,
     params.sname,
     welcomeMessage
@@ -27,7 +24,7 @@ exports.saveMessage = async (params, welcomeMessage) => {
  */
 exports.getNames = async (res) => {
   try {
-    await getAllMessages().then((data) => {
+    await greetingModel.getAllMessages().then((data) => {
       res.setHeader("Content-Type", "application/json");
       res.send({ data });
     });
@@ -46,7 +43,7 @@ exports.getNames = async (res) => {
  */
 
 exports.getById = async (req, res) => {
-  const message = await GreetingModel.getMessageById(req.params.id)
+  const message = await greetingModel.getMessageById(req.params.id)
     .then((data) => {
       res.send({ message: data.message });
       console.log(data);
@@ -65,7 +62,7 @@ exports.updatemessage = async (req, res) => {
   const id = req.params.id;
   const messages = req.params.message;
 
- await GreetingModel.updateMessageById(req.params.id,messages).then(data=>{
+ await greetingModel.updateMessageById(req.params.id,messages).then(data=>{
     res.send({message:data.message})
     emitter.emit("sendEmail", `Welcome message of ID ( ${id}) is been updated to ${messages} `);
   }).catch(err=>{
@@ -77,7 +74,7 @@ exports.updatemessage = async (req, res) => {
 
 exports.deleteID = async (req, res) => {
   const id = req.params.id;
-  await GreetingModel.deleteMessageById(req.params.id).then(data=>{
+  await greetingModel.deleteMessageById(req.params.id).then(data=>{
     if(data!==null){
       res.send({data});
       emitter.emit("sendEmail", `ID ( ${id}) is been deleted `);
