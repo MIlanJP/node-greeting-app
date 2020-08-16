@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "nodemon server.js",
     "test": "mocha",
-    "debug":"node --inspect-brk server.js"
+    "debug": "node --inspect-brk server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "custom-env": "^2.0.1",
     "express": "^4.17.1",
     "jest": "^26.3.0",

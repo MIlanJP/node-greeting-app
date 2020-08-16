@@ -53,7 +53,6 @@ exports.getAllMessages = () => {
   return new Promise((resolve, reject) => {
     mongooseModel
       .find({})
-      .select("message")
       .then((data) => {
         resolve(data);
       })
