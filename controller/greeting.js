@@ -14,13 +14,13 @@ exports.create = (req, res) => {
     typeof req.params.name !== "undefined" &&
     typeof req.params.name !== "undefined"
   ) {
-    welcomeMessage = `Welcome to Node JS ${req.params.name} ${req.params.sname}`;
+    welcomeMessage = `Hello ${req.params.name} ${req.params.sname}`;
   }
   if (typeof req.params.name === "undefined") {
-    welcomeMessage = `Welcome to Node JS ${req.params.sname}`;
+    welcomeMessage = `Hello ${req.params.sname}`;
   }
   if (typeof req.params.sname === "undefined") {
-    welcomeMessage = `Welcome to Node JS ${req.params.name}`;
+    welcomeMessage = `Hello ${req.params.name}`;
   }
   const savedMessage=greetingservices.saveMessage(req.params, welcomeMessage);
   console.log(savedMessage,"Printing from controller");
